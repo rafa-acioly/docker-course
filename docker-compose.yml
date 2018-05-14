@@ -4,8 +4,13 @@ volumes:
 networks:
   banco:
   web:
+  cache:
 services:
-  db: # Container para banco de dados
+  redis:
+    image: redis:3.2
+    networks:
+      - cache
+  postgres: # Container para banco de dados
     image: postgres:9.6
     volumes:
       # Volume dos dados
@@ -39,5 +44,6 @@ services:
     networks:
       - banco
       - web
+      - cache
     depends_on:
       - db
